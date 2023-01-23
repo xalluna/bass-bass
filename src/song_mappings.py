@@ -1,5 +1,5 @@
-from song import Song
-from image_processor import ImageProcessor
+from src.song import Song
+from src.image_processor import ImageProcessor
 
 song_map = [
     ["Unknown", 'bobby_hill.mp3'],
