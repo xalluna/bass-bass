@@ -1,9 +1,9 @@
 #! /usr/bin/python
 from concurrent.futures import ThreadPoolExecutor
-from src.image_processor import ImageProcessor
-from src.song_mappings import choose_song
+from image_processor import ImageProcessor
+from song_mappings import choose_song
 from imutils.video import FPS
-from src.song import Song
+from song import Song
 import imutils
 import time
 import cv2
