@@ -1,4 +1,4 @@
-from image_processor import ImageProcessor
+from src.image_processor import ImageProcessor
 
 sety: set[str]= {"foo", "bar", 'fizz', 'buzz'}
 listy: list[list[int, str]] = [[1, "a"], [2, 'b'], [3, "c"], [4, "d"]]
