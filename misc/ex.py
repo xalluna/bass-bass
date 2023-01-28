@@ -1,14 +1,31 @@
-from src.image_processor import ImageProcessor
+from typing import Callable
 
-sety: set[str]= {"foo", "bar", 'fizz', 'buzz'}
-listy: list[list[int, str]] = [[1, "a"], [2, 'b'], [3, "c"], [4, "d"]]
-list2: list[int] = [5, 6, 7, 8, 1]
+class sortable():
+    song: Callable[..., str]
+    priority: int
+    def __init__(self, song: str, prio: int) -> None:
+        self.song = song
+        self.priority = prio
 
-# print([*zip(sety, listy, list2)])
-# print([item for item in listy if item[0] not in list2])
+song_map: dict[str, sortable] = {
+    "Unknown": sortable(lambda x: 'bobby_hill.mp3', 10),
+    "Brandon": sortable(lambda x: 'barcelona.mp3' if 'Deanna' in x else 'a.mp3', 1),
+    "Deanna": sortable(lambda x: 'crazy_frog.mp3', 2),
+    "Robin": sortable(lambda x: 'the_batman.mp3', 4),
+    "Log": sortable(lambda x: 'qs.mp3', 4),
+    "Pao" : sortable(lambda x: ('boom_boom_pao.mp3', 'careless_whisper.mp3', 'barbie_girl.mp3')[len(x) - 1 if len(x) < 3 else 2], 0),
+}
 
-# print([item[0] for item in listy])
+def main():
+    foo = ['Brandon', 'Pao', 'Unknown', 'Deanna']
 
-# print([[item[0] for item in listy],[item[1] for item in listy]])
-[num for num in [1, 5] if num in list2]
-print('okay :)')
+    bar = [song_map[name] for name in foo]
+    bar = sorted(bar, key=lambda x: x.priority, reverse=False)
+
+    fizz = bar[0]
+    buzz = fizz.song(foo) if callable(fizz.song) else fizz.song
+    print(buzz)
+#end mainu
+
+if __name__ == '__main__':
+    main()

@@ -74,7 +74,7 @@ class ImageProcessor:
     def update_names(self, names_to_add: list[str]):
         """Adds names to history and updates people seen."""
 
-        self.people_seen_before = self.people_seen
+        self.people_seen_before = self.people_seen.copy()
         self.people_seen.update(names_to_add)
 
         self.previous_names = self.current_names

@@ -1,6 +1,7 @@
 #! /usr/bin/python
 
 # import the necessary packages
+import sys
 from imutils import paths
 from pathlib import Path
 import face_recognition
@@ -18,8 +19,9 @@ knownNames = []
 # loop over the image paths
 for (i, imagePath) in enumerate(imagePaths):
 	# extract the person name from the image path
-	print("[INFO] processing image {}/{}".format(i + 1,
-		len(imagePaths)))
+	sys.stdout.write(f'\rProcessing image {i + 1}/{len(imagePaths)}')
+	sys.stdout.flush()
+
 	name = imagePath.split(os.path.sep)[-2]
 
 	# load the input image and convert it from RGB (OpenCV ordering)
@@ -43,8 +45,9 @@ for (i, imagePath) in enumerate(imagePaths):
 		knownNames.append(name)
 
 # dump the facial encodings + names to disk
-print("[INFO] serializing encodings...")
+print("\n\rSerializing encodings...")
 data = {"encodings": knownEncodings, "names": knownNames}
+
 path = Path(__file__).parent.joinpath('data-model')
 if(not path.exists()):
 	path.mkdir(0, True)
@@ -52,3 +55,6 @@ if(not path.exists()):
 f = open("data-model\\encodings.pickle", "wb")
 f.write(pickle.dumps(data))
 f.close()
+
+print("\nComplete :D")
+
