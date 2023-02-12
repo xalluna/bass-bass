@@ -2,7 +2,7 @@ from pathlib import Path
 import cv2
 
 def main():
-    path = choose_name() #replace with your name
+    path = choose_name()
 
     cam = cv2.VideoCapture(0)
 
@@ -13,17 +13,20 @@ def main():
 
     while True:
         ret, frame = cam.read()
+
         if not ret:
             print("failed to grab frame")
             break
+
         cv2.imshow("press space to take a photo", frame)
 
         k = cv2.waitKey(1)
-        if k%256 == 27:
+
+        if k % 256 == 27:
             # ESC pressed
             print("Escape hit, closing...")
             break
-        elif k%256 == 32:
+        elif k % 256 == 32:
             # SPACE pressed
             img_name = f"{path}\\image_{img_counter}.jpg"
             print(img_name)

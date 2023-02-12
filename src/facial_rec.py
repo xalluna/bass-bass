@@ -7,6 +7,7 @@ from song import Song
 import imutils
 import time
 import cv2
+from time import sleep
 
 def main():
 	processor = ImageProcessor()
@@ -23,40 +24,35 @@ def main():
 		_, frame = vs.read()
 		frame = imutils.resize(frame, width=500)
 
-		# if(count % 30 == 0):
-		# 	Thread(target=image_processing, args=(frame,), daemon=True).start()
 
 		cv2.imshow("Pao-er Bass", frame)
 		
+
 		key = cv2.waitKey(1) & 0xFF
 
 		if key == ord("q"):
 			break
-		if key == ord("a"):
-			thread_executor.submit(worker, processor, song, frame)
 		if key == ord("s"):
 			song.stop()
 		
 		count += 1
 		fps.update()
 
+		if(not song.is_playing()):
+			processor.process_image(frame)
+
+			is_new_song: bool = choose_song(song, processor)
+			if is_new_song:
+				song.play()
+
 	fps.stop()
-	print("[INFO] elasped time: {:.2f}".format(fps.elapsed()))
-	print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
+	print("Elasped time: {:.2f}".format(fps.elapsed()))
+	print("FPS: {:.2f}".format(fps.fps()))
 
 	thread_executor.shutdown()
 	vs.release()
 	cv2.destroyAllWindows()
 #end main
-
-def worker(processer: ImageProcessor, song: Song, frame) -> None:
-	processer.process_image(frame)
-
-	is_new_song: bool = choose_song(song, processer)
-
-	if is_new_song:
-		song.play()
-#end worker
 
 if __name__ == '__main__':
     main()

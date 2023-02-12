@@ -1,60 +1,48 @@
-#! /usr/bin/python
-
-# import the necessary packages
-import sys
 from imutils import paths
 from pathlib import Path
 import face_recognition
-#import argparse
 import pickle
 import cv2
+import sys
 import os
 
-imagePaths = list(paths.list_images("dataset"))
+def main():
+	imagePaths = list(paths.list_images("dataset"))
 
-# initialize the list of known encodings and known names
-knownEncodings = []
-knownNames = []
+	knownEncodings = []
+	knownNames = []
 
-# loop over the image paths
-for (i, imagePath) in enumerate(imagePaths):
-	# extract the person name from the image path
-	sys.stdout.write(f'\rProcessing image {i + 1}/{len(imagePaths)}')
-	sys.stdout.flush()
+	for (i, imagePath) in enumerate(imagePaths):
+		sys.stdout.write(f'\rProcessing image {i + 1}/{len(imagePaths)}')
+		sys.stdout.flush()
 
-	name = imagePath.split(os.path.sep)[-2]
+		name = imagePath.split(os.path.sep)[-2]
 
-	# load the input image and convert it from RGB (OpenCV ordering)
-	# to dlib ordering (RGB)
-	image = cv2.imread(imagePath)
-	rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+		image = cv2.imread(imagePath)
+		rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-	# detect the (x, y)-coordinates of the bounding boxes
-	# corresponding to each face in the input image
-	boxes = face_recognition.face_locations(rgb,
-		model="hog")
+		face_locations = face_recognition.face_locations(rgb_image,
+			model="hog")
 
-	# compute the facial embedding for the face
-	encodings = face_recognition.face_encodings(rgb, boxes)
+		encodings = face_recognition.face_encodings(rgb_image, face_locations)
 
-	# loop over the encodings
-	for encoding in encodings:
-		# add each encoding + name to our set of known names and
-		# encodings
-		knownEncodings.append(encoding)
-		knownNames.append(name)
+		for encoding in encodings:
+			knownEncodings.append(encoding)
+			knownNames.append(name)
 
-# dump the facial encodings + names to disk
-print("\n\rSerializing encodings...")
-data = {"encodings": knownEncodings, "names": knownNames}
+	print("\n\rSerializing encodings...")
+	data = {"encodings": knownEncodings, "names": knownNames}
 
-path = Path(__file__).parent.joinpath('data-model')
-if(not path.exists()):
-	path.mkdir(0, True)
+	path = Path(__file__).parent.joinpath('data-model')
 
-f = open("data-model\\encodings.pickle", "wb")
-f.write(pickle.dumps(data))
-f.close()
+	if(not path.exists()):
+		path.mkdir(0, True)
 
-print("\nComplete :D")
+	f = open("data-model\\encodings.pickle", "wb")
+	f.write(pickle.dumps(data))
+	f.close()
 
+	print("\nComplete :D")
+
+if __name__ == '__main__':
+	main()

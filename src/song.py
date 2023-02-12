@@ -5,7 +5,9 @@ from playsound import playsound
 class Song:
     """Class for holding a song's name and process."""
     song_name: str
+    """Name of the song held by the current process."""
     song_process: Process
+    """Subprocess for the current song."""
 
     def __init__(self, song_name: str) -> None:
         self.song_process = self.new_song(song_name)
@@ -36,7 +38,7 @@ class Song:
             self.song_process.start()
         except:
             return
-    #end start
+    #end play
 
     def stop(self) -> None:
         """Attempts to `terminate` and `join` the current song `Process`.
@@ -49,6 +51,13 @@ class Song:
         except:
             return
     #end stop
+
+    def is_playing(self) -> bool:
+        """Returns wether or not the process is running"""
+
+        return self.song_process.is_alive()
+    #end is_playing
+
 
     def new_song(self, song_name: str) -> Process:
         """Returns a new `Process` that will play the desired `.mp3` file."""

@@ -80,7 +80,6 @@ class ImageProcessor:
         self.previous_names = self.current_names
         self.current_names = names_to_add
         self.name_history.insert(0, names_to_add)
-        print(f'[6] name_history: {self.name_history}')
 
 
     def get_current_names(self) -> list[str]:
