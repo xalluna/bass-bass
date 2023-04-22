@@ -21,7 +21,6 @@ class ImageProcessor:
     """Encoding data for faces from the data set. This data must be precompiled."""
 
     def __init__(self) -> None:
-        #this coerces `people_seen` to be an empty set. Otherwise it will be a dict.
         self.people_seen = set()
         self.people_seen_before = set()
 
@@ -79,6 +78,7 @@ class ImageProcessor:
         self.previous_names = self.current_names
         self.current_names = names_to_add
         self.name_history.insert(0, names_to_add)
+    #end update_names
 
     def get_history(self) -> list[list[str]]:
         """Gets the entire name history."""

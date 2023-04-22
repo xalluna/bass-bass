@@ -2,7 +2,6 @@ from image_processor import ImageProcessor
 from key_mapping import key_map
 import pygame.mixer as mixer
 import imutils
-import time
 import cv2
 
 def main():
@@ -10,7 +9,6 @@ def main():
 	mixer.init()
 
 	vs = cv2.VideoCapture(0)
-	# time.sleep(2.0)
 
 	running: bool = True
 	searching: bool = True
