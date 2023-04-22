@@ -2,13 +2,13 @@ from song import Song
 from image_processor import ImageProcessor
 
 song_map: dict[str, str] = {
-    "Unknown": 'bobby_hill',
-    "Brandon": 'get_money',
-    "Deanna": 'crazy_frog',
-    "Robin": 'gummy_bear',
-    "Log": 'scary_monsters_and_nice_sprites',
-    "Pao": 'careless_whisper',
-    "Hall": 'hooked_on_a_feeling'
+    'Unknown': 'bobby_hill',
+    'Brandon': 'a',
+    'Deanna': 'crazy_frog',
+    'Robin': 'gummy_bear',
+    'Log': 'scary_monsters_and_nice_sprites',
+    'Pao': 'careless_whisper',
+    'Kody' : 'sweet_victory',
 }
 
 def choose_song(song: Song, processor: ImageProcessor) -> bool:

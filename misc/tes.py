@@ -1,10 +1,10 @@
-i = 1
-b = False
+def testy():
+    return (True, False)
 
-if i:
-    print('true')
+a = True
+b = True
 
-if b:
-    print('false')
+a, b = testy()
 
-l = ['']
+print(a)
+print(b)

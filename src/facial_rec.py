@@ -1,4 +1,3 @@
-#! /usr/bin/python
 from concurrent.futures import ThreadPoolExecutor
 from image_processor import ImageProcessor
 from song_mappings import choose_song
@@ -7,7 +6,6 @@ from song import Song
 import imutils
 import time
 import cv2
-from time import sleep
 
 def main():
 	processor = ImageProcessor()
@@ -24,10 +22,8 @@ def main():
 		_, frame = vs.read()
 		frame = imutils.resize(frame, width=500)
 
-
 		cv2.imshow("Pao-er Bass", frame)
 		
-
 		key = cv2.waitKey(1) & 0xFF
 
 		if key == ord("q"):
@@ -44,6 +40,7 @@ def main():
 			is_new_song: bool = choose_song(song, processor)
 			if is_new_song:
 				song.play()
+
 
 	fps.stop()
 	print("Elasped time: {:.2f}".format(fps.elapsed()))
